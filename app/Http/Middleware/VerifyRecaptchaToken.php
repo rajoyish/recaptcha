@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\RecaptchaRequestFailed;
+use App\Exceptions\RecaptchaVerificationFailed;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -25,11 +27,11 @@ class VerifyRecaptchaToken
             ->object();
 
         if ($response->success === false) {
-            dd('failed');
+            throw new RecaptchaRequestFailed;
         }
 
         if ($response->score <= 0.8) {
-            dd('recaptcha failed');
+            throw new RecaptchaVerificationFailed;
         }
 
         return $next($request);
