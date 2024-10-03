@@ -16,7 +16,7 @@ class VerifyRecaptchaToken
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, ?int $threshold = null): Response
     {
         $response = Http::asForm()
             ->post('https://www.google.com/recaptcha/api/siteverify', [
@@ -30,7 +30,7 @@ class VerifyRecaptchaToken
             throw new RecaptchaRequestFailed;
         }
 
-        if ($response->score <= 0.8) {
+        if ($response->score <= $threshold ?? config('recaptcha.threshold')) {
             throw new RecaptchaVerificationFailed;
         }
 
