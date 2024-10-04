@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form action="{{ route('send.email') }}" method="POST" class="space-y-8">
+    <form action="{{ route('send.email') }}" method="POST" class="space-y-8" @recaptcha('submit')>
         @csrf
         <div>
             <x-input-label for="name" :value="__('Name')" />
