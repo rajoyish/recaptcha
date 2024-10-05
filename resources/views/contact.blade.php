@@ -2,7 +2,7 @@
     <form action="{{ route('send.email') }}" method="POST" class="space-y-8" @recaptcha('submit')>
         @csrf
         <div>
-            <x-input-label for="name" :value="__('Name')" />
+            <x-input-label for="name" :value="__('Your Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
